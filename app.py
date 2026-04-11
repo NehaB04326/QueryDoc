@@ -1,6 +1,6 @@
 """
 ╔══════════════════════════════════════════════════════════════════╗
-║                    DocIQ  v2.6                                   ║
+║                    QueryDoc  v2.6                                   ║
 ║        Advanced Document Intelligence & Deep Analysis            ║
 ╚══════════════════════════════════════════════════════════════════╝
 Run:  streamlit run app.py
@@ -53,7 +53,7 @@ except ImportError:
 # PAGE CONFIG 
 # ════════════════════════════════════════════════════════════════
 st.set_page_config(
-    page_title="DocIQ - Document Intelligence",
+    page_title="QueryDocc - Document Intelligence",
     page_icon="D",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -658,7 +658,7 @@ def render_graph(active_fname: str):
 def main():
     # --- SIDEBAR ---
     with st.sidebar:
-        st.markdown('<div class="dociq-logo">DocIQ</div>', unsafe_allow_html=True)
+        st.markdown('<div class="dociq-logo">QueryDoc</div>', unsafe_allow_html=True)
         st.markdown('<div class="dociq-tagline">Deep Document Analysis</div>', unsafe_allow_html=True)
         st.divider()
 
