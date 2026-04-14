@@ -740,5 +740,15 @@ def main():
     with tabs[2]: render_dna(st.session_state.active_pdf)
     with tabs[3]: render_graph(st.session_state.active_pdf)
 
+
+hide_streamlit_style = """
+    <style>
+        footer {visibility: hidden;}
+        #MainMenu {visibility: hidden;}
+        header {visibility: hidden;}
+    </style>
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 if __name__ == "__main__":
     main()
