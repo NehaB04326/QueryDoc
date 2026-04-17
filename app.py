@@ -800,26 +800,57 @@ def get_chroma():
 # ════════════════════════════════════════════════════════════════
 def call_llm(messages: list, system: str = "", temperature: float = 0.7, max_tokens: int = 2048) -> str:
     full = []
-    if system: full.append({"role": "system", "content": system})
+    if system: 
+        full.append({"role": "system", "content": system})
     full.extend(messages)
 
+    # Try Groq first (primary)
     if GROQ_API_KEY:
         try:
             client = Groq(api_key=GROQ_API_KEY)
-            resp   = client.chat.completions.create(model="llama-3.3-70b-versatile", messages=full, temperature=temperature, max_tokens=max_tokens)
+            resp = client.chat.completions.create(
+                model="mixtral-8x7b-32768",  # Changed to free tier model
+                messages=full, 
+                temperature=temperature, 
+                max_tokens=max_tokens
+            )
             return resp.choices[0].message.content.strip()
         except Exception as e:
-            err = str(e).lower()
-            if "rate" not in err and "quota" not in err: return f"[Groq Error] {e}"
+            error_msg = str(e)
+            print(f"[Groq Error] {error_msg}")
+            # Don't fall back to Gemini for certain errors, just return error
+            if "api_key" in error_msg.lower() or "invalid" in error_msg.lower():
+                return "[Error] Groq API key is invalid or expired. Please check your API key in secrets.toml"
+            # For rate limits, try Gemini as fallback
+            if "rate" not in error_msg.lower() and "quota" not in error_msg.lower():
+                return f"[Groq Error] {error_msg}"
 
+    # Try Gemini as fallback only if Groq fails (with better error handling)
     if GEMINI_OK and GEMINI_API_KEY:
         try:
             genai.configure(api_key=GEMINI_API_KEY)
-            model  = genai.GenerativeModel(model_name="gemini-2.0-flash", system_instruction=system or "You are a helpful assistant.")
-            return model.generate_content("\n".join(m["content"] for m in messages)).text.strip()
-        except Exception as e: return f"[Gemini Error] {e}"
+            # Use gemini-1.5-flash which has different quota limits
+            model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+            
+            # Build prompt without system_instruction parameter for compatibility
+            prompt_parts = []
+            if system:
+                prompt_parts.append(f"System instruction: {system}\n")
+            for msg in messages:
+                role = "User" if msg["role"] == "user" else "Assistant"
+                prompt_parts.append(f"{role}: {msg['content']}")
+            prompt_parts.append("Assistant: ")
+            
+            full_prompt = "\n".join(prompt_parts)
+            response = model.generate_content(full_prompt)
+            return response.text.strip()
+        except Exception as e:
+            error_msg = str(e)
+            if "429" in error_msg or "quota" in error_msg.lower():
+                return "[Error] API quota exceeded. Please try again later or check your Groq API key."
+            return f"[Gemini Error] {error_msg}"
 
-    return "[Warning] No API key configured."
+    return "[Warning] No valid API key configured. Please check GROQ_API_KEY in secrets.toml"
 
 def log(msg: str):
     ts = datetime.now().strftime("%H:%M:%S")
