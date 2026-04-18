@@ -1,11 +1,3 @@
-"""
-╔══════════════════════════════════════════════════════════════════╗
-║                    QueryDoc  v4.0                                   ║
-║        Advanced Document Intelligence & Deep Analysis            ║
-╚══════════════════════════════════════════════════════════════════╝
-Run:  streamlit run app.py
-"""
-
 try:
     __import__('pysqlite3')
     import sys
@@ -58,21 +50,16 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ════════════════════════════════════════════════════════════════
-# HIDE STREAMLIT DEFAULT UI + INJECT GLOBAL CSS
-# ════════════════════════════════════════════════════════════════
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@600&display=swap');
 
-/* ── RESET STREAMLIT CHROME ── */
 #MainMenu, footer, header { visibility: hidden !important; }
 [data-testid="stAppDeployButton"] { display: none !important; }
 [data-testid="collapsedControl"],
 [data-testid="stSidebarCollapseButton"] { display: none !important; }
 .viewerBadge_container, [data-testid="stViewerBadge"] { display: none !important; }
 
-/* ── GLOBAL TOKENS ── */
 :root {
     --ink:         #0a0f1e;
     --ink-2:       #2d3a55;
@@ -113,7 +100,6 @@ html, body, [class*="css"] {
     color: var(--ink);
 }
 
-/* ── CANVAS BACKGROUND ── */
 .stApp {
     background: var(--canvas);
     background-image:
@@ -122,7 +108,6 @@ html, body, [class*="css"] {
         radial-gradient(ellipse 50% 40% at 50% 50%,  rgba(224,231,255,0.12) 0%, transparent 70%);
 }
 
-/* ── SIDEBAR ── */
 [data-testid="stSidebar"] {
     background: linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(248,251,255,0.88) 100%) !important;
     backdrop-filter: var(--glass-blur) !important;
@@ -135,7 +120,6 @@ html, body, [class*="css"] {
     padding-top: 0 !important;
 }
 
-/* ── SIDEBAR ACTIVE BUTTON ── */
 [data-testid="stSidebar"] button[kind="primary"] {
     background: linear-gradient(135deg, var(--sapphire-l) 0%, var(--sapphire-d) 100%) !important;
     color: #fff !important;
@@ -178,7 +162,6 @@ html, body, [class*="css"] {
     background: rgba(220,38,38,0.08) !important;
 }
 
-/* ── TABS ── */
 .stTabs [data-baseweb="tab-list"] {
     background: rgba(255,255,255,0.60);
     backdrop-filter: blur(16px);
@@ -211,7 +194,6 @@ html, body, [class*="css"] {
     box-shadow: var(--sh-blue) !important;
 }
 
-/* ── GENERIC INPUTS ── */
 .stTextInput > div > div > input,
 .stTextArea > div > div > textarea {
     background: rgba(255,255,255,0.90) !important;
@@ -230,7 +212,6 @@ html, body, [class*="css"] {
     outline: none !important;
 }
 
-/* ── GENERIC BUTTONS ── */
 .stButton > button {
     font-family: 'Outfit', sans-serif !important;
     font-size: 13px !important;
@@ -261,7 +242,6 @@ html, body, [class*="css"] {
     box-shadow: var(--sh-sm) !important;
 }
 
-/* ── SELECTS / MULTISELECT ── */
 [data-testid="stSelectbox"] > div > div,
 [data-testid="stMultiSelect"] > div > div {
     background: rgba(255,255,255,0.90) !important;
@@ -270,7 +250,6 @@ html, body, [class*="css"] {
     font-size: 13.5px !important;
 }
 
-/* ── FILE UPLOADER ── */
 [data-testid="stFileUploader"] {
     border: 1.5px dashed rgba(59,130,246,0.38) !important;
     border-radius: var(--r-lg) !important;
@@ -282,7 +261,6 @@ html, body, [class*="css"] {
     background: rgba(219,234,254,0.26) !important;
 }
 
-/* Blue browse file button */
 [data-testid="stFileUploader"] button {
     background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
     color: white !important;
@@ -297,7 +275,6 @@ html, body, [class*="css"] {
     box-shadow: 0 6px 24px rgba(37,99,235,0.42) !important;
 }
 
-/* ── TOAST / ALERT ── */
 [data-testid="stToast"] {
     background: rgba(255,255,255,0.95) !important;
     backdrop-filter: blur(20px) !important;
@@ -311,24 +288,15 @@ html, body, [class*="css"] {
     font-size: 13px !important;
 }
 
-/* ── HR ── */
 hr { border: none !important; border-top: 1px solid var(--border) !important; margin: 14px 0 !important; }
 
-/* ── RADIO ── */
 [data-testid="stRadio"] label { font-size: 13px !important; color: var(--ink-2) !important; }
 
-
-/* ═══════════════════════════════════════════════════════════
-   CHAT LAYOUT — FULL-HEIGHT FIXED BOTTOM BAR
-   ═══════════════════════════════════════════════════════════ */
-
-/* Main content area needs padding at bottom so messages aren't hidden */
 .main .block-container {
     padding-bottom: 0 !important;
     padding-top: 1rem !important;
 }
 
-/* The chat scroll area */
 .chat-scroll-area {
     height: calc(85vh - 180px);
     overflow-y: auto;
@@ -342,7 +310,6 @@ hr { border: none !important; border-top: 1px solid var(--border) !important; ma
     border-radius: 999px;
 }
 
-/* Chat bubbles */
 .chat-wrap-user {
     display: flex;
     justify-content: flex-end;
@@ -392,7 +359,6 @@ hr { border: none !important; border-top: 1px solid var(--border) !important; ma
     box-shadow: 0 2px 8px rgba(59,130,246,0.30);
 }
 
-/* ── FIXED CHAT INPUT BAR WITH BUTTON INSIDE ── */
 .chat-input-bar {
     position: fixed;
     bottom: 0;
@@ -407,7 +373,6 @@ hr { border: none !important; border-top: 1px solid var(--border) !important; ma
     padding: 14px 24px 18px 24px;
 }
 
-/* Push the chat form to not obscure sidebar */
 .chat-input-inner {
     max-width: 860px;
     margin: 0 auto;
@@ -426,7 +391,6 @@ hr { border: none !important; border-top: 1px solid var(--border) !important; ma
     box-shadow: 0 4px 24px rgba(10,15,40,0.12), 0 0 0 3px rgba(59,130,246,0.15);
 }
 
-/* Override streamlit input inside the bar */
 .chat-input-bar .stTextInput {
     flex: 1;
 }
@@ -445,7 +409,6 @@ hr { border: none !important; border-top: 1px solid var(--border) !important; ma
 }
 .chat-input-bar .stTextInput > div { border: none !important; }
 
-/* Send button inside chat bar */
 .chat-send-btn {
     flex-shrink: 0;
     display: flex;
@@ -474,10 +437,6 @@ hr { border: none !important; border-top: 1px solid var(--border) !important; ma
     transform: translateY(-1px) !important;
 }
 
-
-/* ═══════════════════════════════════════
-   SIDEBAR HEADER / LOGO
-   ═══════════════════════════════════════ */
 .qd-logo {
     font-family: 'Playfair Display', serif;
     font-size: 26px;
@@ -512,9 +471,6 @@ hr { border: none !important; border-top: 1px solid var(--border) !important; ma
     50% { box-shadow: 0 0 0 5px rgba(16,185,129,0.08); }
 }
 
-/* ═══════════════════════════════════════
-   CONTENT CARDS
-   ═══════════════════════════════════════ */
 .qd-card {
     background: rgba(255,255,255,0.85);
     backdrop-filter: blur(18px) saturate(160%);
@@ -592,9 +548,6 @@ hr { border: none !important; border-top: 1px solid var(--border) !important; ma
     box-shadow: var(--sh-sm), inset 0 1px 0 rgba(255,255,255,0.90);
 }
 
-/* ═══════════════════════════════════════
-   METRIC CARDS
-   ═══════════════════════════════════════ */
 .metric-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -626,9 +579,6 @@ hr { border: none !important; border-top: 1px solid var(--border) !important; ma
     margin-top: 3px;
 }
 
-/* ═══════════════════════════════════════
-   EMPTY STATE
-   ═══════════════════════════════════════ */
 .empty-wrap {
     display: flex;
     flex-direction: column;
@@ -672,9 +622,6 @@ hr { border: none !important; border-top: 1px solid var(--border) !important; ma
     backdrop-filter: blur(8px);
 }
 
-/* ═══════════════════════════════════════
-   THINKING INDICATOR
-   ═══════════════════════════════════════ */
 .thinking-wrap {
     display: flex;
     align-items: center;
@@ -708,7 +655,6 @@ hr { border: none !important; border-top: 1px solid var(--border) !important; ma
     letter-spacing: 0.01em;
 }
 
-/* Sidebar upload label */
 .upload-label {
     font-size: 9.5px;
     font-weight: 700;
@@ -728,7 +674,6 @@ hr { border: none !important; border-top: 1px solid var(--border) !important; ma
     display: block;
 }
 
-/* Professional extraction styles */
 .extraction-section {
     background: rgba(255,255,255,0.80);
     border: 1px solid var(--border);
@@ -760,10 +705,6 @@ hr { border: none !important; border-top: 1px solid var(--border) !important; ma
 </style>
 """, unsafe_allow_html=True)
 
-
-# ════════════════════════════════════════════════════════════════
-# SESSION STATE
-# ════════════════════════════════════════════════════════════════
 def init_state():
     defaults = {
         "pdf_store":     {},
@@ -778,9 +719,6 @@ def init_state():
 
 init_state()
 
-# ════════════════════════════════════════════════════════════════
-# DEFERRED HEAVY RESOURCES
-# ════════════════════════════════════════════════════════════════
 def get_embed_model():
     if "embed_model" not in st.session_state:
         with st.spinner("Initializing semantic engine…"):
@@ -794,10 +732,6 @@ def get_chroma():
         st.session_state.chroma_client = chromadb.PersistentClient(path="./dociq_chroma")
     return st.session_state.chroma_client
 
-
-# ════════════════════════════════════════════════════════════════
-# LLM CALL
-# ════════════════════════════════════════════════════════════════
 def call_llm(messages: list, system: str = "", temperature: float = 0.7, max_tokens: int = 2048) -> str:
     full = []
     if system: full.append({"role": "system", "content": system})
@@ -826,10 +760,6 @@ def log(msg: str):
     st.session_state.env_log.append(f"[{ts}] {msg}")
     if len(st.session_state.env_log) > 60: st.session_state.env_log.pop(0)
 
-
-# ════════════════════════════════════════════════════════════════
-# PDF PROCESSING
-# ════════════════════════════════════════════════════════════════
 def ocr_pdf(pdf_bytes: bytes) -> tuple:
     if not OCR_AVAILABLE:
         return "", []
@@ -881,10 +811,6 @@ def chunk_text(text: str, size: int = 600, overlap: int = 100) -> list:
     if cur.strip(): out.append(cur.strip())
     return out
 
-
-# ════════════════════════════════════════════════════════════════
-# VECTOR STORE
-# ════════════════════════════════════════════════════════════════
 def col_name(fname: str) -> str:
     h = hashlib.md5(fname.encode()).hexdigest()[:8]
     safe = re.sub(r'[^a-zA-Z0-9_-]', '_', fname[:20])
@@ -923,10 +849,6 @@ def retrieve(query: str, active_fname: str, top_k: int = 5) -> str | None:
     hits = [doc for doc, dist in zip(res["documents"][0], res["distances"][0]) if (1.0 - dist) > 0.22]
     return "\n---\n".join(hits) if hits else None
 
-
-# ════════════════════════════════════════════════════════════════
-# DEEP ANALYSIS
-# ════════════════════════════════════════════════════════════════
 def run_quick_classification(full_text: str) -> dict:
     prompt = (
         'Classify this document. Return ONLY valid JSON, no markdown.\n\n'
@@ -972,10 +894,6 @@ def run_deep_analysis(full_text: str, existing_analysis: dict) -> dict:
         existing_analysis["deep_analysis_done"] = True
         return existing_analysis
 
-
-# ════════════════════════════════════════════════════════════════
-# DNA FINGERPRINT
-# ════════════════════════════════════════════════════════════════
 def count_syllables(word: str) -> int:
     word = word.lower()
     count, vowels = 0, "aeiouy"
@@ -1080,10 +998,6 @@ def dna_radar(dna_data: dict) -> go.Figure:
     )
     return fig
 
-
-# ════════════════════════════════════════════════════════════════
-# KNOWLEDGE GRAPH
-# ════════════════════════════════════════════════════════════════
 def extract_triples(full_text: str) -> list:
     if not full_text: return []
     prompt = (
@@ -1162,10 +1076,6 @@ def build_graph_html(triples: list) -> str:
     os.unlink(tmp_name)
     return html
 
-
-# ════════════════════════════════════════════════════════════════
-# CHAT
-# ════════════════════════════════════════════════════════════════
 def build_system_prompt(active_fname: str) -> str:
     events = "\n".join(st.session_state.env_log[-5:]) or "Session started."
     return (
@@ -1186,10 +1096,6 @@ def do_chat(user_msg: str, active_fname: str) -> str:
     log(f'Chat ({active_fname}): "{user_msg[:40]}"')
     return reply
 
-
-# ════════════════════════════════════════════════════════════════
-# REWRITE
-# ════════════════════════════════════════════════════════════════
 STYLE_PROMPTS = {
     "Plain Language":   "Rewrite the following text in PLAIN LANGUAGE. Use short sentences (max 15 words), common words, and explain technical terms. Keep all key facts. Make it easy for a beginner to understand.",
     "Interview Format": "Convert the following text into INTERVIEW FORMAT. Create 5-7 question and answer pairs that capture the most important points. Make it conversational, as if someone is being interviewed by an expert.",
@@ -1209,10 +1115,6 @@ def rewrite_text(original_text: str, style: str) -> str:
     )
     return raw if raw else "Failed to generate rewrite."
 
-
-# ════════════════════════════════════════════════════════════════
-# UI — CHAT TAB
-# ════════════════════════════════════════════════════════════════
 def render_chat(active_fname: str):
     data = st.session_state.pdf_store[active_fname]
     chat_history = data["chat_history"]
@@ -1270,7 +1172,6 @@ def render_chat(active_fname: str):
     </script>
     """, unsafe_allow_html=True)
 
-    # Chat input with both Enter and button support
     with st.form(key="chat_form", clear_on_submit=True):
         col1, col2 = st.columns([10, 1])
         with col1:
@@ -1291,16 +1192,11 @@ def render_chat(active_fname: str):
                     do_chat(msg, active_fname)
                 st.rerun()
 
-
-# ════════════════════════════════════════════════════════════════
-# UI — EXTRACTION TAB (Professional Minimalist)
-# ════════════════════════════════════════════════════════════════
 def render_analysis(active_fname: str):
     data = st.session_state.pdf_store[active_fname]
     a = data.get("analysis") or {}
 
     if not a.get("deep_analysis_done", False):
-        # Left align button while keeping original width
         col1, col2 = st.columns([10, 10])
         with col1:
             if st.button("Run Structured Extraction", type="primary", use_container_width=False):
@@ -1310,7 +1206,6 @@ def render_analysis(active_fname: str):
                 st.rerun()
         return
 
-    # Document header
     st.markdown(
         f'<div style="margin-bottom:24px;">'
         f'<div style="font-size:18px;font-weight:600;color:#0a0f1e;margin-bottom:4px;">{active_fname}</div>'
@@ -1319,12 +1214,10 @@ def render_analysis(active_fname: str):
         unsafe_allow_html=True
     )
 
-    # Executive Summary
     if a.get("executive_summary"):
         st.markdown('<div class="section-label">Executive Summary</div>', unsafe_allow_html=True)
         st.markdown(f'<div style="background:rgba(255,255,255,0.75);border:1px solid var(--border);border-radius:var(--r-md);padding:20px;margin-bottom:24px;font-size:14px;line-height:1.7;">{a["executive_summary"]}</div>', unsafe_allow_html=True)
 
-    # Two column layout
     col1, col2 = st.columns(2)
 
     with col1:
@@ -1345,7 +1238,6 @@ def render_analysis(active_fname: str):
         for imp in a.get("strategic_implications", []):
             st.markdown(f'<div class="info-item"><div class="info-value">• {imp}</div></div>', unsafe_allow_html=True)
 
-    # Key Entities
     vital = a.get("vital_entities", {})
     if vital:
         st.markdown('<div class="section-label">Key Entities</div>', unsafe_allow_html=True)
@@ -1363,10 +1255,6 @@ def render_analysis(active_fname: str):
                 for concept in concepts[:5]:
                     st.markdown(f'<div class="info-value" style="margin-bottom:8px;">{concept}</div>', unsafe_allow_html=True)
 
-
-# ════════════════════════════════════════════════════════════════
-# UI — DNA TAB (Image + Insights side by side)
-# ════════════════════════════════════════════════════════════════
 def render_dna(active_fname: str):
     dna_store = {f: d["dna"] for f, d in st.session_state.pdf_store.items() if d.get("dna") and not d.get("removed") and d["dna"]}
     if not dna_store:
@@ -1376,7 +1264,6 @@ def render_dna(active_fname: str):
     current_dna = dna_store.get(active_fname, {})
     
     if current_dna:
-        # Metrics row
         st.markdown('<div class="metric-grid">', unsafe_allow_html=True)
         m_cols = st.columns(4)
         metrics = [
@@ -1390,7 +1277,6 @@ def render_dna(active_fname: str):
                 st.markdown(f'<div class="metric-box"><div class="metric-val">{val:.0f}</div><div class="metric-lbl">{label}</div></div>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
         
-        # Radar chart + insights side by side
         chart_col, insight_col = st.columns([1, 1])
         
         with chart_col:
@@ -1403,7 +1289,6 @@ def render_dna(active_fname: str):
                 for insight in insights:
                     st.markdown(f'<div style="background:rgba(255,255,255,0.70);border-left:3px solid #3b82f6;border-radius:0 8px 8px 0;padding:12px 16px;margin-bottom:10px;font-size:13px;">{insight}</div>', unsafe_allow_html=True)
     
-    # Document comparison
     if len(dna_store) > 1:
         st.markdown('<div class="section-label">Compare Documents</div>', unsafe_allow_html=True)
         default = [active_fname] if active_fname in dna_store else []
@@ -1421,14 +1306,9 @@ def render_dna(active_fname: str):
             fig.update_layout(paper_bgcolor="rgba(244,246,251,0)", plot_bgcolor="rgba(255,255,255,0)", font=dict(color="#0a0f1e", family="Outfit"), height=280, margin=dict(l=0,r=0,t=20,b=0))
             st.plotly_chart(fig, use_container_width=True)
 
-
-# ════════════════════════════════════════════════════════════════
-# UI — GRAPH TAB
-# ════════════════════════════════════════════════════════════════
 def render_graph(active_fname: str):
     data = st.session_state.pdf_store[active_fname]
     
-    # Always show the button prominently
     col_btn, col_spacer = st.columns([2, 3])
     with col_btn:
         if st.button("Build Relationship Map", type="primary", use_container_width=True):
@@ -1462,10 +1342,6 @@ def render_graph(active_fname: str):
                 if len(triples) > 20:
                     st.caption(f"... and {len(triples) - 20} more")
 
-
-# ════════════════════════════════════════════════════════════════
-# UI — REWRITE TAB
-# ════════════════════════════════════════════════════════════════
 def render_rewrite():
     active_pdf = st.session_state.active_pdf
     if not active_pdf:
@@ -1480,12 +1356,10 @@ def render_rewrite():
     else:
         source_text = st.text_area("Paste text", height=120, placeholder="Paste text to transform...")
     
-    # Align selectbox and button properly
     col_style, col_btn = st.columns([3, 1])
     with col_style:
       selected_style = st.selectbox("Format", list(STYLE_PROMPTS.keys()))
     with col_btn:
-    # Add vertical spacing to align button down
       st.markdown('<div style="margin-top: 28px;"></div>', unsafe_allow_html=True)
       run = st.button("Rewrite", type="primary", use_container_width=True)
 
@@ -1501,10 +1375,6 @@ def render_rewrite():
             st.markdown(f'<div class="rewrite-output">{result}</div>', unsafe_allow_html=True)
             st.download_button(label="Download", data=result, file_name=f"rewrite_{selected_style.replace(' ', '_')}.txt", mime="text/plain")
 
-
-# ════════════════════════════════════════════════════════════════
-# MAIN
-# ════════════════════════════════════════════════════════════════
 def main():
     with st.sidebar:
         st.markdown('<div style="padding:20px 6px 6px 6px;"><div class="qd-logo">QueryDoc</div><div class="qd-tagline">Your PDF Assistant</div></div>', unsafe_allow_html=True)
@@ -1586,7 +1456,6 @@ def main():
         render_graph(st.session_state.active_pdf)
     with tabs[4]:
         render_rewrite()
-
 
 if __name__ == "__main__":
     main()
